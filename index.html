@@ -1,0 +1,682 @@
+<!doctype html>
+<title>Matteo Burico</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light dark;
+    --ink: #1a221e;
+    --ink-soft: #4d564e;
+    --paper: #edeee7;
+    --paper-raised: #e3e4db;
+    --accent: #2f6b4f;
+    --accent-strong: #1f4d38;
+    --accent-soft: #d9e3da;
+    --line: #c6c3b3;
+    --focus: #1f4d38;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e9ece6;
+      --ink-soft: #a9b2a7;
+      --paper: #12160f;
+      --paper-raised: #191f16;
+      --accent: #62b58c;
+      --accent-strong: #8cd0ac;
+      --accent-soft: #1d2c22;
+      --line: #303830;
+      --focus: #8cd0ac;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #e9ece6;
+    --ink-soft: #a9b2a7;
+    --paper: #12160f;
+    --paper-raised: #191f16;
+    --accent: #62b58c;
+    --accent-strong: #8cd0ac;
+    --accent-soft: #1d2c22;
+    --line: #303830;
+    --focus: #8cd0ac;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3 {
+    font-family: "Fraunces", ui-serif, Georgia, serif;
+    font-weight: 500;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- skip link ---------- */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -3rem;
+    background: var(--accent);
+    color: var(--paper);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: top 0.15s ease;
+    z-index: 100;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  /* ---------- page frame ---------- */
+  .frame {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  @media (max-width: 720px) {
+    .frame { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- top bar ---------- */
+  header.masthead {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0.85rem clamp(1.25rem, 4vw, 3rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .mark .seal {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.3px solid var(--accent);
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    font-size: 0.65rem;
+  }
+  nav.jumps {
+    display: flex;
+    gap: clamp(0.9rem, 2vw, 1.6rem);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+  }
+  nav.jumps a { text-decoration: none; color: var(--ink-soft); }
+  nav.jumps a:hover { color: var(--accent-strong); }
+  @media (max-width: 640px) { nav.jumps { display: none; } }
+
+  /* ---------- rail (section index) ---------- */
+  .rail {
+    padding-top: 0.4rem;
+  }
+  .rail-list {
+    position: sticky;
+    top: calc(3.6rem + env(safe-area-inset-top, 0px));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .rail-list a {
+    display: block;
+    text-decoration: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.03em;
+  }
+  .rail-list a b { color: var(--ink); display: block; font-weight: 500; }
+  .rail-list a:hover, .rail-list a:hover b { color: var(--accent-strong); }
+  @media (max-width: 720px) { .rail { display: none; } }
+
+  main { min-width: 0; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    padding-block: clamp(2.6rem, 7vw, 4.5rem) clamp(2rem, 5vw, 3rem);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+    line-height: 0.98;
+    margin-top: 0.5rem;
+  }
+  .hero .role {
+    margin-top: 0.9rem;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--ink-soft);
+    max-width: 34ch;
+  }
+  .hero .role em { color: var(--accent-strong); font-style: normal; font-weight: 500; }
+
+  .stamp {
+    flex: none;
+    width: clamp(64px, 9vw, 92px);
+    height: clamp(64px, 9vw, 92px);
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    transform: rotate(-9deg);
+    font-family: "IBM Plex Mono", monospace;
+    text-align: center;
+    line-height: 1.15;
+    position: relative;
+  }
+  .stamp::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 1px dashed var(--accent);
+    opacity: 0.55;
+  }
+  .stamp span { font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .stamp strong { display: block; font-size: 1.1rem; }
+
+  .doc-meta {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .doc-meta span::before { content: "— "; color: var(--line); }
+
+  .hero-cta {
+    margin-top: 1.8rem;
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.82rem;
+    text-decoration: none;
+    padding: 0.62rem 1.1rem;
+    border-radius: 3px;
+    border: 1px solid var(--accent);
+    color: var(--paper);
+    background: var(--accent);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+  /* ---------- sections ---------- */
+  section {
+    padding-block: clamp(2.2rem, 5vw, 3.4rem);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 4.5rem;
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1.4rem;
+  }
+  .section-head .num {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+  .section-head h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); }
+
+  .lede {
+    max-width: 62ch;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+  }
+  .lede strong { color: var(--ink); font-weight: 500; }
+
+  /* ledger rows */
+  .ledger { border-top: 1px solid var(--line); margin-top: 1.6rem; }
+  .row {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: 0.4rem 1.4rem;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; gap: 0.35rem; }
+  }
+  .row .when {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    padding-top: 0.2rem;
+  }
+  .row .what h3 {
+    font-size: 1.05rem;
+    font-weight: 500;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+  .row .what .where {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 0.15rem;
+  }
+  .row .what p { margin: 0.55rem 0 0; color: var(--ink-soft); max-width: 58ch; }
+  .row .tag {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    padding: 0.18rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  /* skills */
+  .skill-groups {
+    margin-top: 1.6rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.6rem;
+  }
+  .skill-group .g-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 0.7rem;
+  }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pill {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.35rem 0.65rem;
+    background: var(--paper-raised);
+  }
+  .lang-list { list-style: none; margin: 0; padding: 0; }
+  .lang-list li {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 0.45rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.92rem;
+  }
+  .lang-list li:last-child { border-bottom: none; }
+  .lang-list .lvl {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--accent-strong);
+  }
+
+  /* projects */
+  .projects {
+    margin-top: 1.6rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .project {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.3rem 1.4rem;
+    background: var(--paper-raised);
+    display: grid;
+    gap: 0.5rem;
+  }
+  .project .p-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .project h3 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+  }
+  .project .status {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-strong);
+  }
+  .project p { margin: 0; color: var(--ink-soft); max-width: 62ch; }
+  .project .stack {
+    margin-top: 0.3rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+  }
+  .project-empty {
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    padding: 1.3rem 1.4rem;
+    color: var(--ink-soft);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  /* contact */
+  .contact-row {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    align-items: center;
+  }
+  .contact-row a.email {
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--accent);
+    padding-bottom: 0.1rem;
+  }
+  .contact-row a.email:hover { color: var(--accent-strong); border-color: var(--accent-strong); }
+  .contact-note { color: var(--ink-soft); font-size: 0.9rem; }
+
+  footer {
+    padding: 1.6rem clamp(1.25rem, 4vw, 3rem) calc(1.6rem + env(safe-area-inset-bottom, 0px));
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<a class="skip-link" href="#main">Vai al contenuto</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="mark" href="#top">
+      <span class="seal">MB</span>
+      Matteo Burico
+    </a>
+    <nav class="jumps" aria-label="Sezioni">
+      <a href="#profilo">Profilo</a>
+      <a href="#percorso">Percorso</a>
+      <a href="#esperienza">Esperienza</a>
+      <a href="#competenze">Competenze</a>
+      <a href="#progetti">Progetti</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+  </div>
+</header>
+
+<div class="frame" id="top">
+  <aside class="rail" aria-hidden="true">
+    <ul class="rail-list">
+      <li><a href="#profilo">01 <b>Profilo</b></a></li>
+      <li><a href="#percorso">02 <b>Percorso</b></a></li>
+      <li><a href="#esperienza">03 <b>Esperienza</b></a></li>
+      <li><a href="#competenze">04 <b>Competenze</b></a></li>
+      <li><a href="#progetti">05 <b>Progetti</b></a></li>
+      <li><a href="#contatti">06 <b>Contatti</b></a></li>
+    </ul>
+  </aside>
+
+  <main id="main">
+
+    <section class="hero" aria-label="Presentazione">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">Dossier professionale</p>
+          <h1>Matteo Burico</h1>
+          <p class="role">Economics &amp; Management &mdash; <em>Audit, FP&amp;A e M&amp;A Advisory</em></p>
+        </div>
+        <div class="stamp" role="img" aria-label="Timbro: verificato">
+          <div><span>Verificato</span><strong>MB</strong></div>
+        </div>
+      </div>
+
+      <p class="doc-meta mono">
+        <span>Rev. Set 2026</span>
+        <span>Torino, IT</span>
+        <span>IT &middot; ES &middot; EN &middot; PT</span>
+      </p>
+
+      <div class="hero-cta">
+        <a class="btn" href="#progetti">Vedi i progetti</a>
+        <a class="btn ghost" href="mailto:matteoburico@gmail.com">Scrivimi</a>
+      </div>
+    </section>
+
+    <section id="profilo" aria-labelledby="profilo-h">
+      <div class="section-head">
+        <span class="num mono">01</span>
+        <h2 id="profilo-h">Profilo</h2>
+      </div>
+      <p class="lede">
+        Sto completando una <strong>doppia laurea magistrale in Economics and Management</strong>
+        (LM&#8209;56, indirizzo Innovation and AI Economics) all&rsquo;Università di Torino, dopo un anno
+        Erasmus alla Universidad de Zaragoza dedicato a FP&amp;A, budgeting e forecasting.
+        Il mio interesse professionale è rivolto a <strong>Transaction Services</strong> e
+        <strong> M&amp;A advisory</strong>: mi interessa il punto in cui i numeri di un&rsquo;azienda
+        diventano la base di una decisione &mdash; una due diligence, una valutazione, un piano.
+      </p>
+    </section>
+
+    <section id="percorso" aria-labelledby="percorso-h">
+      <div class="section-head">
+        <span class="num mono">02</span>
+        <h2 id="percorso-h">Percorso formativo</h2>
+      </div>
+      <div class="ledger">
+        <div class="row">
+          <div class="when mono">2024 &ndash; in corso</div>
+          <div class="what">
+            <h3>Laurea Magistrale, Economics and Management</h3>
+            <div class="where">LM&#8209;56 &middot; Innovation and AI Economics &middot; Università di Torino</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when mono">2025</div>
+          <div class="what">
+            <h3>Erasmus &mdash; FP&amp;A, Budgeting &amp; Forecasting</h3>
+            <div class="where">Universidad de Zaragoza, Spagna</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="when mono">2021 &ndash; 2024</div>
+          <div class="what">
+            <h3>Laurea Triennale, Economia</h3>
+            <div class="where">Università di Torino</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="esperienza" aria-labelledby="esperienza-h">
+      <div class="section-head">
+        <span class="num mono">03</span>
+        <h2 id="esperienza-h">Esperienza</h2>
+      </div>
+      <div class="ledger">
+        <div class="row">
+          <div class="when mono">Estate 2019<br>Estate 2021</div>
+          <div class="what">
+            <h3>Assistant Accountant</h3>
+            <div class="where">Studio commercialista, Torino</div>
+            <p>
+              Revisione contabile in contesti di due diligence, predisposizione di modelli 730,
+              fatturazione e gestione del software contabile. Presente agli incontri di consulenza
+              societaria con i partner, curando la documentazione preparatoria e il riporto delle
+              decisioni operative concordate con il cliente.
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="lede" style="margin-top:1.4rem;">
+        <strong>Aree di interesse:</strong> Transaction Services &middot; M&amp;A Advisory &middot; FP&amp;A
+      </p>
+    </section>
+
+    <section id="competenze" aria-labelledby="competenze-h">
+      <div class="section-head">
+        <span class="num mono">04</span>
+        <h2 id="competenze-h">Competenze</h2>
+      </div>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <div class="g-label">Dati &amp; analisi</div>
+          <div class="pill-row">
+            <span class="pill">Python</span>
+            <span class="pill">SQL</span>
+            <span class="pill">Excel avanzato</span>
+            <span class="pill">Power Query</span>
+            <span class="pill">Tabelle pivot</span>
+            <span class="pill">CERCA.X</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="g-label">Lingue</div>
+          <ul class="lang-list">
+            <li>Italiano <span class="lvl mono">madrelingua</span></li>
+            <li>Spagnolo <span class="lvl mono">madrelingua</span></li>
+            <li>Inglese <span class="lvl mono">avanzato</span></li>
+            <li>Portoghese <span class="lvl mono">intermedio</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="progetti" aria-labelledby="progetti-h">
+      <div class="section-head">
+        <span class="num mono">05</span>
+        <h2 id="progetti-h">Progetti</h2>
+      </div>
+      <p class="lede">Una sezione che cresce: qui aggiungo i lavori personali via via che prendono forma.</p>
+      <div class="projects">
+        <div class="project">
+          <div class="p-top">
+            <h3>MarginalAI</h3>
+            <span class="status">In sviluppo</span>
+          </div>
+          <p>
+            Piattaforma web di supporto alle decisioni aziendali per l&rsquo;ottimizzazione di
+            costi e ricavi marginali.
+          </p>
+          <div class="stack mono">React</div>
+        </div>
+        <div class="project">
+          <div class="p-top">
+            <h3>Merger Control Fit Score</h3>
+            <span class="status">Tesi in corso</span>
+          </div>
+          <p>
+            Prototipo sviluppato nell&rsquo;ambito della tesi magistrale: un framework per valutare
+            la compatibilità di un&rsquo;operazione di M&amp;A con la normativa antitrust.
+          </p>
+        </div>
+        <div class="project-empty">+ Prossimo progetto in arrivo</div>
+      </div>
+    </section>
+
+    <section id="contatti" aria-labelledby="contatti-h">
+      <div class="section-head">
+        <span class="num mono">06</span>
+        <h2 id="contatti-h">Contatti</h2>
+      </div>
+      <div class="contact-row">
+        <a class="email" href="mailto:matteoburico@gmail.com">matteoburico@gmail.com</a>
+        <span class="contact-note">CV disponibile su richiesta</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <span>&copy; 2026 Matteo Burico &mdash; Torino, Italia</span>
+  <span>Documento vivo &middot; aggiornato man mano</span>
+</footer>
